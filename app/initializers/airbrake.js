@@ -5,7 +5,7 @@ var isSetup = false;
 
 function setupAirbrake(){
   Airbrake.setProject(config.airbrake.projectId, config.airbrake.projectKey);
-  Airbrake.setEnvironmentName(config.env);
+  Airbrake.setEnvironmentName(config.environment);
   Airbrake.addEnvironment({
     user_agent: window.navigator.userAgent
   });
