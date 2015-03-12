@@ -1,3 +1,4 @@
+/* global Airbrake*/
 import Ember from "ember";
 import config from "../config/environment.js";
 
@@ -10,22 +11,25 @@ function setupAirbrake(){
   Airbrake.addEnvironment({
     user_agent: window.navigator.userAgent
   });
+
+  var originalOnError = Ember.onerror || Ember.K;
   Ember.onerror = function(err) { // any ember error
+    originalOnError(err);
     Airbrake.push(err);
   };
   Ember.RSVP.on('error',function(err){ // any promise error
     Airbrake.push(err);
   });
-  window.onerror = function(message, file, line, error){ // window general errors.
+  window.onerror = function(message, file, line, column, error){ // window general errors.
     if (message === 'Script error.') {
       // Ignore.
       return;
     }
 
     if (error) {
-      global.Airbrake.push({error: error});
+      Airbrake.push({error: error});
     } else {
-      global.Airbrake.push({error: {
+      Airbrake.push({error: {
         message: message,
         fileName: file,
         lineNumber: line,
@@ -33,7 +37,7 @@ function setupAirbrake(){
       }});
     }
   };
-};
+}
 
 export function initialize(/* container, application */) {
   if (config.airbrake && !isSetup) {
