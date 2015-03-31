@@ -8,6 +8,9 @@ function setupAirbrake(){
   Airbrake.addReporter(Airbrake.consoleReporter);
   Airbrake.setProject(config.airbrake.projectId, config.airbrake.projectKey);
   Airbrake.setEnvironmentName(config.environment);
+  if (config.airbrake.host) {
+    Airbrake.setHost(config.airbrake.host);
+  }
   Airbrake.addEnvironment({
     user_agent: window.navigator.userAgent
   });
