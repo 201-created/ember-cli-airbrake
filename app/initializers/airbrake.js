@@ -15,7 +15,7 @@ function setupAirbrake(){
     user_agent: window.navigator.userAgent
   });
 
-  var preprocessor = config.preprocessor || function(err) { return err; };
+  var preprocessor = config.airbrake.preprocessor || function(err) { return err; };
   function pushError(err) {
     Airbrake.push(preprocessor(err));
   }
