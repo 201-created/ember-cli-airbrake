@@ -15,13 +15,18 @@ function setupAirbrake(){
     user_agent: window.navigator.userAgent
   });
 
+  var preprocessor = config.preprocessor || function(err) { return err; };
+  function pushError(err) {
+    Airbrake.push(preprocessor(err));
+  }
+
   var originalOnError = Ember.onerror || Ember.K;
   Ember.onerror = function(err) { // any ember error
     originalOnError(err);
-    Airbrake.push(err);
+    pushError(err)
   };
   Ember.RSVP.on('error',function(err){ // any promise error
-    Airbrake.push(err);
+    pushError(err)
   });
   window.onerror = function(message, file, line, column, error){ // window general errors.
     if (message === 'Script error.') {
@@ -30,9 +35,9 @@ function setupAirbrake(){
     }
 
     if (error) {
-      Airbrake.push({error: error});
+      pushError({error: error})
     } else {
-      Airbrake.push({error: {
+      pushError({error: {
         message: message,
         fileName: file,
         lineNumber: line,
