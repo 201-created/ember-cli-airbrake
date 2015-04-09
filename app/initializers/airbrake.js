@@ -4,7 +4,7 @@ import config from "../config/environment.js";
 
 var isSetup = false;
 
-function setupAirbrake(){
+function setupAirbrake(container) {
   Airbrake.addReporter(Airbrake.consoleReporter);
   Airbrake.setProject(config.airbrake.projectId, config.airbrake.projectKey);
   Airbrake.setEnvironmentName(config.environment);
@@ -15,7 +15,10 @@ function setupAirbrake(){
     user_agent: window.navigator.userAgent
   });
 
-  var preprocessor = config.airbrake.preprocessor || function(err) { return err; };
+  var preprocessor = function(err) { return err; };
+  if (config.airbrake.preprocessor) {
+    preprocessor = container.lookup(config.airbrake.preprocessor);
+  }
   function pushError(err) {
     Airbrake.push(preprocessor(err));
   }
@@ -47,13 +50,15 @@ function setupAirbrake(){
   };
 }
 
-export function initialize(/* container, application */) {
+export function initialize(container) {
   if (config.airbrake && !isSetup) {
     isSetup = true;
     if (Airbrake.setProject) {
-      setupAirbrake();
+      setupAirbrake(container);
     } else {
-      Airbrake.onload = setupAirbrake;
+      Airbrake.onload = function() {
+        setupAirbrake(container)
+      };
     }
   }
 }
