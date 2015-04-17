@@ -23,7 +23,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.airbrake = {
       projectId:  'my_project_id',
-      projectKey: 'my_project_key
+      projectKey: 'my_project_key'
       // host: 'http://errors.myapp.com/'
     };
   }
