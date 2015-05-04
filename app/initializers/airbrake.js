@@ -1,6 +1,6 @@
 /* global Airbrake*/
 import Ember from "ember";
-import config from "../config/environment.js";
+import config from "../config/environment";
 
 var isSetup = false;
 
