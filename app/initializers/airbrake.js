@@ -4,7 +4,7 @@ import config from "../config/environment";
 
 var isSetup = false;
 
-function setupAirbrake(){
+function setupAirbrake(container) {
   Airbrake.addReporter(Airbrake.consoleReporter);
   Airbrake.setProject(config.airbrake.projectId, config.airbrake.projectKey);
   Airbrake.setEnvironmentName(config.environment);
@@ -15,13 +15,21 @@ function setupAirbrake(){
     user_agent: window.navigator.userAgent
   });
 
+  var preprocessor = function(err) { return err; };
+  if (config.airbrake.preprocessor) {
+    preprocessor = container.lookup(config.airbrake.preprocessor);
+  }
+  function pushError(err) {
+    Airbrake.push(preprocessor(err));
+  }
+
   var originalOnError = Ember.onerror || Ember.K;
   Ember.onerror = function(err) { // any ember error
     originalOnError(err);
-    Airbrake.push(err);
+    pushError(err)
   };
   Ember.RSVP.on('error',function(err){ // any promise error
-    Airbrake.push(err);
+    pushError(err)
   });
   window.onerror = function(message, file, line, column, error){ // window general errors.
     if (message === 'Script error.') {
@@ -30,9 +38,9 @@ function setupAirbrake(){
     }
 
     if (error) {
-      Airbrake.push({error: error});
+      pushError({error: error})
     } else {
-      Airbrake.push({error: {
+      pushError({error: {
         message: message,
         fileName: file,
         lineNumber: line,
@@ -42,13 +50,15 @@ function setupAirbrake(){
   };
 }
 
-export function initialize(/* container, application */) {
+export function initialize(container) {
   if (config.airbrake && !isSetup) {
     isSetup = true;
     if (Airbrake.setProject) {
-      setupAirbrake();
+      setupAirbrake(container);
     } else {
-      Airbrake.onload = setupAirbrake;
+      Airbrake.onload = function() {
+        setupAirbrake(container)
+      };
     }
   }
 }
