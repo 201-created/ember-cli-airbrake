@@ -30,5 +30,35 @@ module.exports = function(environment) {
 
   return ENV;
 };
+```
 
+You can also configure a preprocessor function that processes errors before they are sent to Airbrake (or Errbit):
+
+```javascript
+// config/environment.js
+module.exports = function(environment) {
+  var ENV = {
+    /* ... */
+
+  if (environment === 'production') {
+    ENV.airbrake = {
+      projectId:    'my_project_id',
+      projectKey:   'my_project_key'
+      preprocessor: 'utils:error-preprocessor'
+    };
+  }
+
+  return ENV;
+};
+```
+
+```javascript
+// app/utils/error-preprocessor.js
+export default function errorPreprocessor(err) {
+  if (Ember.typeOf(err) !== 'error') {
+    return JSON.stringify(err);
+  } else {
+    return err;
+  }
+}
 ```
