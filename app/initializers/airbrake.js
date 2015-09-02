@@ -28,9 +28,6 @@ function setupAirbrake(container) {
     originalOnError(err);
     pushError(err)
   };
-  Ember.RSVP.on('error',function(err){ // any promise error
-    pushError(err)
-  });
   window.onerror = function(message, file, line, column, error){ // window general errors.
     if (message === 'Script error.') {
       // Ignore.
