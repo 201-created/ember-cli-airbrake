@@ -1,11 +1,12 @@
 # ember-cli-airbrake
+[![Build Status](https://travis-ci.org/201-created/ember-cli-airbrake.svg?branch=master)](https://travis-ci.org/201-created/ember-cli-airbrake)
 
 ember-cli-airbrake is an [Ember CLI](http://www.ember-cli.com/) addon for integrating the [Airbrake JS](https://github.com/airbrake/airbrake-js) error notifier into your app.
 
 ## Installation
 
  * install the addon: `ember install ember-cli-airbrake`
- * update your `config/environment.js' with an `airbrake` object that includes `projectId` and `projectKey`:
+ * update your `config/environment.js` with an `airbrake` object that includes `projectId` and `projectKey`:
 
 ```javascript
 // in "production" environment section, e.g.:
