@@ -1,26 +1,64 @@
-# Ember-cli-airbrake
+# ember-cli-airbrake
 
-This README outlines the details of collaborating on this Ember addon.
+ember-cli-airbrake is an  [Ember CLI](http://www.ember-cli.com/) addon for integrating the [Airbrake JS](https://github.com/airbrake/airbrake-js) error notifier into your app.
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+`npm install --save-dev ember-cli-airbrake`
 
-## Running
+## Configuration
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+ember-cli-airbrake is configured per environment. If it isn't configured for a particular environment it will not be built into your ember application for that environment.
 
-## Running Tests
+You must specify your `project_id` and `project_key` for ember-cli-airbrake to work. Your `project_id` can be found in the url of your project/ app error page.
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+If you are using [Errbit](https://github.com/errbit/errbit), the open-source, Airbrake API compatible error catcher, you must also set the host parameter to your errbit installation.
 
-## Building
+```javascript
+// config/environment.js
+module.exports = function(environment) {
+  var ENV = {
+    /* ... */
 
-* `ember build`
+  if (environment === 'production') {
+    ENV.airbrake = {
+      projectId:  'my_project_id',
+      projectKey: 'my_project_key'
+      // host: 'http://errors.myapp.com/'
+    };
+  }
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+  return ENV;
+};
+```
+
+You can also configure a preprocessor function that processes errors before they are sent to Airbrake (or Errbit):
+
+```javascript
+// config/environment.js
+module.exports = function(environment) {
+  var ENV = {
+    /* ... */
+
+  if (environment === 'production') {
+    ENV.airbrake = {
+      projectId:    'my_project_id',
+      projectKey:   'my_project_key'
+      preprocessor: 'utils:error-preprocessor'
+    };
+  }
+
+  return ENV;
+};
+```
+
+```javascript
+// app/utils/error-preprocessor.js
+export default function errorPreprocessor(err) {
+  if (Ember.typeOf(err) !== 'error') {
+    return JSON.stringify(err);
+  } else {
+    return err;
+  }
+}
+```
