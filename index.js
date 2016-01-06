@@ -3,11 +3,10 @@
 
 module.exports = {
   name: 'ember-cli-airbrake',
-  included: function(app) {
-    var config = this.project.config(this.app.env);
 
-    if (config.airbrake) {
-      app.import("vendor/airbrake-shim.js");
-    }
+  included: function(app) {
+    this._super.included(app);
+
+    app.import(app.bowerDirectory + '/airbrake-js-client/dist/client.min.js');
   }
 };
