@@ -3,6 +3,7 @@ import getClient from '../utils/get-client';
 import setEnvironment from '../filters/environment';
 import loggerReporter from '../reporters/logger';
 import setSession from '../filters/session';
+import getOwner from 'ember-getowner-polyfill';
 
 export default Ember.Service.extend({
   init: function() {
@@ -32,7 +33,7 @@ export default Ember.Service.extend({
 
   // private
   _getClient() {
-    let config = this.container.lookupFactory('config:environment');
+    let config = getOwner(this).resolveRegistration('config:environment');
 
     let client = getClient(config, {
       reporters: [loggerReporter],
