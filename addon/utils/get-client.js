@@ -1,12 +1,12 @@
 /* global airbrakeJs */
 
 import Ember from 'ember';
-const { K } = Ember;
+const {} = Ember;
 
 let NullClient = Ember.Object.extend({
-  notify:     K,
-  addFilter:  K,
-  setSession: K,
+  notify() {},
+  addFilter() {},
+  setSession() {},
 });
 
 function validateAirbrakeConfig(airbrakeConfig) {
