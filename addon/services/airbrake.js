@@ -8,7 +8,7 @@ const { getOwner } = Ember;
 
 export default Ember.Service.extend({
   init: function() {
-    this._super.apply(...arguments);
+    this._super(...arguments);
     this.client = this._getClient();
   },
 
