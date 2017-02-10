@@ -3,7 +3,8 @@ import getClient from '../utils/get-client';
 import setEnvironment from '../filters/environment';
 import loggerReporter from '../reporters/logger';
 import setSession from '../filters/session';
-import getOwner from 'ember-getowner-polyfill';
+
+const { getOwner } = Ember;
 
 export default Ember.Service.extend({
   init: function() {
