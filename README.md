@@ -95,5 +95,5 @@ notifyOfError: function() {
 
 In any environment where `config.airbrake` is not set (such as your test environment, typically),
 the error handlers for airbrake notification will not be set up. The `airbrake` service will still
-exist, but all its methods will be no-ops (`Ember.K`). This way your tests will still run happily even
+exist, but all its methods will be no-ops. This way your tests will still run happily even
 if they use, e.g. `airbrake.setSession` to set user session information.
