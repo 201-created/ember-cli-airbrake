@@ -16,7 +16,7 @@ ENV.airbrake = {
 }
 ```
 
-Installing the addon will install the bower component for the airbrake client. This addon uses the airbrake client version **0.5.8**.
+Installing the addon will install the NPM component for the airbrake client. This addon uses the airbrake client version **0.9.8**.
 
 ## Configuration
 
