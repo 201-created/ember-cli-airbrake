@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "ember-cli-babel": "^6.3.0",
-    "airbrake-js": "^0.5.9"
+    "airbrake-js": "^0.5.9",
+    "ember-cli-version-checker": "^2.0.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -35,7 +36,6 @@
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
-    "ember-cli-version-checker": "^2.0.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
