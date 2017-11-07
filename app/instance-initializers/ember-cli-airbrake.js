@@ -37,7 +37,7 @@ function initialize(instance) {
     airbrake.notify(error);
   };
 
-  if (!!config.airbrake) {
+  if (config.airbrake) {
     registerEmberOnError(notifyFn);
     registerWindowOnError(notifyFn);
   }
