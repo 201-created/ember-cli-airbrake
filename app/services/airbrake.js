@@ -1,2 +1,1 @@
-import AirbrakeService from 'ember-cli-airbrake/services/airbrake';
-export default AirbrakeService;
+export { default } from 'ember-cli-airbrake/services/airbrake';
