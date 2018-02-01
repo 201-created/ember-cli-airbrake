@@ -1,18 +1,19 @@
 /* global airbrakeJs */
 
-import Ember from 'ember';
+import EmberObject from  '@ember/object';
+import { assert } from '@ember/debug';
 
-let NullClient = Ember.Object.extend({
+let NullClient = EmberObject.extend({
   notify() {},
   addFilter() {},
   setSession() {}
 });
 
 function validateAirbrakeConfig(airbrakeConfig) {
-  Ember.assert('airbrake projectId must be set in config',
-               !!airbrakeConfig.projectId);
-  Ember.assert('airbrake projectKey must be set in config',
-               !!airbrakeConfig.projectKey);
+  assert('airbrake projectId must be set in config',
+         !!airbrakeConfig.projectId);
+  assert('airbrake projectKey must be set in config',
+         !!airbrakeConfig.projectKey);
 }
 
 export default function getClient(config, options={}) {
