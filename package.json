@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-airbrake",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "An ember-cli addon that integrates airbrake error reporting",
   "keywords": [
     "ember-addon",
@@ -21,8 +21,8 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^6.3.0",
     "airbrake-js": "^0.5.9",
+    "ember-cli-babel": "^6.3.0",
     "ember-cli-version-checker": "^2.0.0"
   },
   "devDependencies": {
