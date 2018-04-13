@@ -2,7 +2,8 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 function registerEmberOnError(notifyFn) {
-  let originalOnError = Ember.onerror || Ember.K;
+  let originalOnError = Ember.onerror || function() {};
+
   Ember.onerror = function(err) {
     originalOnError(err);
     notifyFn(err);
