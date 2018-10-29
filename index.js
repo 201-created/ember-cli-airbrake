@@ -14,7 +14,7 @@ module.exports = {
     if (dep.isAbove('2.15.0')) {
       app.import('node_modules/airbrake-js/dist/client.min.js');
     } else {
-      app.import(app.bowerDirectory + '/airbrake-js/dist/client.min.js');
+      app.import(app.bowerDirectory + '/airbrake-js-client/dist/client.min.js');
     }
   }
 };
