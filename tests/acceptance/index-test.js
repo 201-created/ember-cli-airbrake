@@ -1,21 +1,19 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
-import $ from 'jquery';
+import { visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | index');
+module('Acceptance | index', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('visiting /', function(assert) {
-  visit('/');
+  test('visiting /', async function(assert) {
+    await visit('/');
 
-  andThen(function() {
-    assert.ok($('#airbrake-service').length, 'has airbrake service on route');
+    assert.dom('#airbrake-service').exists('has airbrake service on route');
   });
-});
 
-test('global airbrakeJs exists', (assert) => {
-  visit('/');
+  test('global airbrakeJs exists', async assert => {
+    await visit('/');
 
-  andThen(() => {
     assert.ok(window.airbrakeJs);
   });
 });
